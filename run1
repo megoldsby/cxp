@@ -1,0 +1,4 @@
+
+export _T_=$1
+gmake run
+
