@@ -1,9 +1,9 @@
 cxp
 ===
 
-CXP is a small runtime executive based on the CSP parallel, communication and alternation constructs. 
+A small runtime executive for embedded systems based on CSP constructs 
 
-I wanted an embedded executive that was a real pleasure for me to use, so I wrote CXP.  CXP allows dynamic process creation and destruction and handles process intercommunication and synchronization.  It does preemptive priority scheduling and supports multiple processing units that share memory.
+I wanted an embedded executive that was a real pleasure for me to use, so I wrote CXP (C eXecutive Program). CXP is based on the CSP parallel, communication and alternation constructs.  It allows dynamic process creation and destruction and handles process intercommunication and synchronization.  It has preemptive priority scheduling and supports multiple processing units that share memory.
 
 CXP processes are low-overhead and meant to be created in profusion.  You create processes using the `par` construct, of which there are four varieties.  Processes intercommunicate and synchronize with each other by means of communication over channels, using the `in` and `out` functions.  Communication is synchronous, so it also synchronizes the communicating process pair.
 
@@ -11,7 +11,7 @@ Alternation allows input from any number of different sources (including timeout
 
 The implementaton language of CXP is C, and the present implementation has 32-bit addresses (compiler switch `-m32` for the GNU C compiler).
 
-CXP bears an obvious debt to the occam language and also to CCSP and CPPCSP2 projects. The implementation of alternation and communication are modeled closely after the CPPCSP2 implementations.
+CXP bears an obvious debt to the occam language and also to CCSP and CPPCSP2 projects. The implementation of alternation and communication is modeled closely after the CPPCSP2 implementation.
 
 Channels are the only shared variables, and all other variables are owned by one process and accessed only by that process. The system manages the channels, freeing the application programmer from having to worry about the trickier aspects of concurrency. Each channel has exactly one reading process and one writing process, although it is permissible to pass the reading or writing privilege to another process; you may send a (pointer to a) channel over a channel or use it as an argument to a newly created process.
 
@@ -19,7 +19,7 @@ CXP cannot enforce non-sharing of variables, however, or the one-reader one-writ
 
 The system is structured as a library.  The application calls CXP services and links the CXP object code with the application program.
 
-I intend CXP to run on bare hardware.  Just to get things rolling, however, I have made a prototype implemenation over an operating system; that is, I use operating system constructs to implement the same interface that CXP will use over bare hardware. I hope that the hardware implementations will be suitable for realtime use.
+I intend CXP to run on bare hardware.  Just to get things rolling, however, I made this prototype implemenation over an operating system; that is, I use operating system constructs to implement the same interface that CXP will use over bare hardware. I haven't yet decided which processor to use for the first hardware implementation.  I hope that the hardware implementations will be suitable for realtime use.
 
 My original operating system target for the prototype was Linux.  The most straightforward implementation is to use a pthread for each (simulated) processor and `swapcontext` for context switching on each processor.  However, the Linux implementation of `swapcontext` is not adequate for preemptive scheduling.  Therefore I made the decision to switch to Solaris for development work and never looked back.  Solaris has been a joy to work with.
 
@@ -168,24 +168,26 @@ Follow the prompts in the installation.
 
 Make sure your virtual Solaris has the GNU development utilities:
 
-    pkg install pkg://solaris/archiver/gnu-tar
-    pkg install pkg://solaris/developer/gnu-binutils
-    pkg install pkg://solaris/diagnostic/top
-    pkg install pkg://solaris/file/gnu-coreutils
-    pkg install pkg://solaris/file/gnu-findutils
-    pkg install pkg://solaris/text/gawk
-    pkg install pkg://solaris/text/gnu-diffutils
-    pkg install pkg://solaris/text/gnu-grep
-    pkg install pkg://solaris/text/gnu-sed
-    pkg install pkg://solaris/developer/build/gnu-make
-    pkg install pkg://solaris/developer/build/make
-    pkg install pkg://solaris/developer/gcc-48
-    pkg install pkg://solaris/system/header
-    pkg install pkg://solaris/developer/build/autoconf
-    pkg install pkg://solaris/developer/build/automake-110
+    sudo pkg install pkg://solaris/archiver/gnu-tar
+    sudo pkg install pkg://solaris/developer/gnu-binutils
+    sudo pkg install pkg://solaris/diagnostic/top
+    sudo pkg install pkg://solaris/file/gnu-coreutils
+    sudo pkg install pkg://solaris/file/gnu-findutils
+    sudo pkg install pkg://solaris/text/gawk
+    sudo pkg install pkg://solaris/text/gnu-diffutils
+    sudo pkg install pkg://solaris/text/gnu-grep
+    sudo pkg install pkg://solaris/text/gnu-sed
+    sudo pkg install pkg://solaris/developer/build/gnu-make
+    sudo pkg install pkg://solaris/developer/build/make
+    sudo pkg install pkg://solaris/developer/gcc-48
+    sudo pkg install pkg://solaris/system/header
+    sudo pkg install pkg://solaris/developer/build/autoconf
+    sudo pkg install pkg://solaris/developer/build/automake-110
 
 Download the gcc 4.9.2 compiler from the GNU gcc site and untar it. It will go into directory gcc-4.9.2; cd to that directory and run
+
     ./contrib/download_prerequisites
+    
 which will download various packages required to build gcc.
 
 Create a build directory (say `gcc-build`) and `cd` to it.  In that directory,
@@ -199,7 +201,7 @@ Then still in the build directory, do
     gmake
     gmake install
 
-
+Beware: the version of `git` available for Solaris 11 (`sudo pkg install pkg://solaris/developer/versioning/git`) is old, and I found it unsatisfactory to work with.  I do all my gitting on my host Ubuntu system.
 
 
     
