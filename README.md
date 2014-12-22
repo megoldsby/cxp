@@ -141,9 +141,13 @@ Features I might add in the future:
    - "poisoning" of channels (to make tear-down of  communication networks easier)
    
 There are a couple of convenience scripts for making and running programs contained in a single module.  For example,
+
     ./run1 examples/ring
+    
 will (make if necessary and) run the program with source `examples/ring.c`.
+
     ./make1 examples/ring
+    
 will just make it.
 
 
