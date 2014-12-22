@@ -5,7 +5,7 @@ CXP is a small runtime executive based on the CSP parallel, communication and al
 
 I wanted an embedded executive that was a real pleasure for me to use, so I wrote CXP.  CXP allows dynamic process creation and destruction and handles process intercommunication and synchronization.  It does preemptive priority scheduling and supports multiple processing units that share memory.
 
-CXP processes are low-overhead and meant to be created in profusion.  You create processes using the `par` construct, of which there are four varieties (explained below).  Processes intercommunicate and synchronize with each other by means of communication over channels, using the `in` and `out` functions.  Communication is synchronous, so it also synchronizes the communicating process pair.
+CXP processes are low-overhead and meant to be created in profusion.  You create processes using the `par` construct, of which there are four varieties.  Processes intercommunicate and synchronize with each other by means of communication over channels, using the `in` and `out` functions.  Communication is synchronous, so it also synchronizes the communicating process pair.
 
 Alternation allows input from any number of different sources (including timeouts). It's like the UNIX `select` operation.
 
