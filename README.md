@@ -9,9 +9,9 @@ CXP processes are low-overhead and meant to be created in profusion.  You create
 
 Alternation allows input from any number of different sources (including timeouts). It's like the UNIX `select` operation.
 
-The implementaton language of CXP is C, and the present implementation has 32-bit addresses (compiler switch `-m32` for the BNU C compiler).
+The implementaton language of CXP is C, and the present implementation has 32-bit addresses (compiler switch `-m32` for the GNU C compiler).
 
-CXP bears an obvious debt to the occam language and also to CCSP and CPPCSP2 projects. It shamelessly copies most of the implementation of alternation and also most of the communcation implementation from the latter.
+CXP bears an obvious debt to the occam language and also to CCSP and CPPCSP2 projects. The implementation of alternation and communication are modeled closely after the CPPCSP2 implementations.
 
 Channels are the only shared variables, and all other variables are owned by one process and accessed only by that process. The system manages the channels, freeing the application programmer from having to worry about the trickier aspects of concurrency. Each channel has exactly one reading process and one writing process, although it is permissible to pass the reading or writing privilege to another process; you may send a (pointer to a) channel over a channel or use it as an argument to a newly created process.
 
@@ -189,6 +189,7 @@ Download the gcc 4.9.2 compiler from the GNU gcc site and untar it. It will go i
 which will download various packages required to build gcc.
 
 Create a build directory (say `gcc-build`) and `cd` to it.  In that directory,
+
     <path/to/gcc-4.9.2>/configure --prefix=/opt/gcc-4.9.2 --disable-tui
 
 (The `--disable-tui` option gets rid of an unresolved symbol).
